@@ -122,11 +122,116 @@ select *
 from employees
 where hire_date<='04/01/01';
 
+--2.3.4 논리조건 연산자(p.8)
+--조건의 갯수는 여러 개가 올 수 있다.
+--여러 조건이 있을 경우 각각의 조건들을 AND, OR 연산자를 이용해 연결한다.
+
+[예제2-13] 30번 부서 사원 중 급여가 10000이하인 사원의 정보를 조회한다.
+--사원의 정보는 : employees 
+--employee_id ~ department_id : 각종 사원들의 정보 중 어떤 특정 컬럼들이 존재
+--부서 정보는 departments에 있으나, 사원들은 부서 10~110번까지 소속되어 있음
+
+select employee_id, first_name ||' ' || last_name as name, salary,department_id
+from employees
+where department_id = 30 and salary<=10000;
+
+[예제2-14] 30번 부서 사원 중 급여가 10000이하이고, 입사 일자가 2005년 이전인 사원의 정보를 조회한다.
+select employee_id, first_name ||' ' || last_name as name, salary,department_id
+from employees
+where department_id = 30 and salary<=10000 and hire_date<'2005-01-01';
+
+[예제2-15] 30번 부서나 60번 부서에 속한 사원의 정보를 조회하시오.
+select first_name||' '|| last_name as name, salary, department_id as dept_id, hire_date
+from employees
+where (department_id = 30 or department_id = 60)and hire_date<'2005-01-01';
+
+select first_name||' '|| last_name as name
+from employees
+where department_id=60 and hire_date<'2005-01-01';
+
+--2.3.5 범위 조건 연산자 between 초기값(이상) and 마지막값(이하)
+[예제 2-18] 사번 110번부터 120번까지의 사원 정보를 조회한다.
+select employee_id as emp_id, first_name ||' '|| last_name as name, salary, department_id as dept_id
+from employees
+where employee_id between 110 and 120;
+
+[예제 2-18] 사번 110번부터 120번까지를 제외한 사원 정보를 조회한다.
+select employee_id as emp_id, first_name ||' '|| last_name as name, salary, department_id as dept_id
+from employees
+where not employee_id between 110 and 120;
+
+--between이나 관계연산자로 비교할 수 있는 값은 숫자, 문자, 날짜 데이터이다.
+
+--날짜 형식으로 변환하는 함수 : TO_DATE('날짜데이터');
+--RR/MM/DD 또는 TO_DATE('날짜데이터', '지정형식 YY-MM-DD HH:MI:SS')
+--3장. 함수 - 변환함수 파트(p.27)
+
+--2.3.7 IN 조건연산자(p.11)
+--OR 연산자 대신 IN연산자 ==> 가독성, 간결성
+
+[예제2-25] 30번 부서원 또는 60번 부서원 또는 90번 부서원의 정보를 조회
+select *
+from employees
+where department_id in(30,60,90);
+
+--2.3.8 like 연산자(p.11)
+--컬럼값 중 특정 패턴에 속하는 값을 조회할 때 사용하는 문자열 패턴 연산자
+-- 1) % : 여러 개의 문자열을 나타낸다.
+-- 2) _ : 하나의 문자열을 나타낸다.
+
+[예제2-28] 이름이 K로 시작되는 사원 정보를 조회한다.
+select *
+from employees
+where first_name like 'K%';
+
+[예제2-28] 성이 s로 끝나는 사원 정보를 조회한다.
+select *
+from employees
+where last_name like '%s';
+
+desc employees;
+--varchar2(길이) : 문자 데이터
+--varchar(길이) : 일반적인 목적으로 사용 x, 오라클에서 사용할 예정인 타입 -> 우리는 사용 x
+--number(길이) : 정수
+--number(총 길이, 소숫점이하 길이) : 실수
+--date : 날짜
+
+[예제2-31] 이메일의 세번 째 문자가 B인 사원정보를 조회한다.
+select *
+from employees
+where email like '__B%';
+
+[예제2-31] 이메일의 뒤에서 세번 째 문자가 B인 사원정보를 조회한다.
+select *
+from employees
+where email like '%B__';
+
+--like 역시 in, between 과 같이 not 연산자와 함께 사용 가능(p.14)
+
+[예제2-33] 전화번호가 6으로 시작되지 않는 사원의 정보를 조회한다.
+select *
+from employees
+where phone_number not like '6%';
+
+--Q. %나 _ 자체를 문자열로 표현하고자 하면?
+[예제2-34] job_id에 _A가 들어간 사원 정보를 조회
+select *
+from employees
+where job_id like '%_A%';
+
+--2.3.9 NULL 조건 처리
+select *
+from locations
+where state_province is null;
+
+select *
+from locations
+where state_province is not null;
+
+--is null : null인 데이터를 조회
+--is not null : null이 아닌 데이터를 조회
 
 
-
-
-
-
-
-
+--commission_pct : (거래에 따른) 수수료율
+--commission_pct가 not null인 이유! 기본급 낮되, 수수료를 책정해서 지급하는 구조
+--                     null인 이유! 판매부서가 아님, 기본 급여가 높거나
