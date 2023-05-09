@@ -1,0 +1,1 @@
+select EMPLOYEE_ID, FIRST_NAME||' '||LAST_NAME name, EMAIL from employees;
