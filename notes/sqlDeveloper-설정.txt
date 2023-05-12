@@ -1,0 +1,28 @@
+
+  :: SQL Developer 설정
+
+
+1) 도구 - 환경설정
+2) 검색 : 글꼴 --> 코딩용 폰트 D2Coding 선택, 글꼴사이즈 : 20이상~
+※ 폰트는 '모든 사용자용으로 설치' 하여 사용하되, 이미 SQL Developer가 실행중이면, 종료 후
+    재시작 해서 설정하여야 함.
+※ SQL 라인이 길어지면 가독성이 떨어지고 각종 함수와 별칭등 복잡한 쿼리 작성시 오탈자가
+   없게 하기 위해 코딩 글꼴 설정을 권장함.
+
+3) 데이터베이스 - 객체 뷰어 : ㅁ 한번 눌러 객체 열기 (체크해제)
+4) 데이터베이스 - 고급 - 배경색을 사용하여 널 표시를 NONE ==> 색상선택 (YELLOW)
+5) 데이터베이스 - NLS - 시간, 언어, 길이(BYTE) 등의 설정 확인
+6) 코드 편집기 - PL/SQL 구문 색상 - 구성표
+
+ ※ Dark Theme 설치 
+     https://draculatheme.com/oracle-sql-developer
+   
+     - installation 따라서 진행
+     - dracula github repository의 Dracular.xml 코드를 그대로 복붙해서 dtcache.xml의 <SourceMap> 다음 행에
+       바로 삽입하고 저장!
+
+
+:: 탐색적 데이터 접근/분석 (EDA)
+- HR 스키마에 있는 샘플데이터를 파악 ==> 데이터를 조작
+                                                                                            입력
+                                                                                             처리

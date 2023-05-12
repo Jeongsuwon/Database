@@ -1,0 +1,73 @@
+
+:: 오라클 sqlDeveloper
+
+- Developer : 데이터베이스를 이용하는 개발자를 위한 도구
+- Modeler : 데이터베이스 설계 도구
+※ Developer 도구에 Modeler가 포함되어 있음 ==> 개발자 수업도중 모델링을 해볼 수 있다!
+
+
+1) 오라클.com
+
+2) 검색 버튼 클릭 ==> 검색어 : sql developer
+
+3) 검색결과 첫번째 클릭
+https://www.oracle.com/database/sqldeveloper/technologies/download/
+
+4) SQL Developer 23.1
+Windows 64-bit with JDK 11 included	
+Download
+(459 MB)
+
+5) 다운받아서 압축 해제 ==> 사용!
+
+6) 바탕화면에 sqldeveloper.exe 바로가기 만들기
+
+7) 실행
+
+8) 이전 SQL Developer 설치에서 환경을 임포트하시겠습니까?
+     [아니오] 체크
+
+9) Oracle 정보 수집 허용?   체크해제!
+※ 상업적으로 사용 ==> XE는 소규모 서비스 개발용이나 테스트용, 자기학습 용도로 한정!!
+    상업적 사용은 Enterprise Edition 사용! (연간 4000$ 이상 비용이 책정..계속 오르고..암튼)
+
+
+개발자 ===>         [CLI, Command Line Interface]   SQLPLUS             ===> Oracle XE 21c ==> Data 입출력!
+                                  [GUI, Graphic User Interface]      SQL Developer
+
+
+10) SQL Developer 에 SYS, SYSTEM 계정/스키마 등록
+ ※ SYS는, 롤(Role)을 SYSDBA로 체크!
+- SYS : DB 백업, 복원, 설치, 제거 권한까지 갖고 있는.. (기본적으로 DB를 생성하고 입출력하는건..)
+- SYSTEM : 사용자 계정 생성, 테이블스페이스 정의, 스키마 정의... [DB 백업,복원 이런건 안됨]
+※ 회사에 있는 (있을지 모르는..또는 담당) DBA (Database Administrator, 데이터베이스 관리자)의 역할.
+
+
+
+※ 여기는 SQLPLUS 를 이용합니다! (시작-명령프롬프트-sqlplus)
+※ 오라클 XE 버전에 따라 다르지만 11g 이후부터, 보안이 강화되면서 계정 생성 규칙이 엄격하게 바뀌었음.
+     └ 그래서 계정 생성을 레거시하게 만드는 (보안 ↓) 설정을 추가하여 계정 생성  ==> ID, PW 간단하고 쉽게!! (실제 서비스 개발에서는 절대로 이렇게 하면..XXX)
+     └ 만약, 설정을 바꾸지 않으면 계정명은 c## 으로 시작하고, 숫자/대소문자/특수문자 포함하여 생성!
+     └ SQL> alter session set "_ORACLE_SCRIPT"=true;   # 먼저 실행!!
+11) 개발용 사용자 계정 생성
+      학습용 사용자 계정 생성
+
+
+Oracle SQL Developer, DBeaver, Toad for Oracle, HeidiSQL, ... 많이 있다..! 그밖에 많은 도구들이 있음...
+(근데 SQL Developer, Oracle 21c XE를 Oracle에서 제작, 무료로 제공 --> 라이센스 확인 하므로 안정성, 기술적인 완성도)
+※ 개인 선택! 어떤걸 쓰건~ Toad는 30-day trial 버전을 제공!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
