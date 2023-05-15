@@ -132,9 +132,41 @@ where e.department_id = d.department_id   --2) join 조건은 on 절에 표시 : where 
 and e.manager_id is not null
 order by e.employee_id;
 
+[예제5-13]
+select e.employee_id, e.first_name, e.department_id,
+       d.department_name
+from employees e inner join departments d
+on e.department_id = d.department_id
+where e.manager_id is not null
+order by        1;
+
+[예제5-15] 사원의 사번, 이름, 부서코드, 부서명, 위치코드, 도시정보 조회한다.
+--오라클 join / ansi join
+--테이블이 3개 이상일 때 -> 첫 번째 join의 결과에, 두 번째 join을 추가하는 형태로 join 연산
+select e.employee_id, e.first_name, e.department_id, d.department_name, l.city
+from employees e inner join departments d
+on e.department_id = d.department_id
+inner join locations l
+on d.location_id = l.location_id;
+
+select e.employee_id, e.first_name, department_id, d.department_name, city
+from employees e inner join departments d
+using (department_id)
+inner join locations l
+using (location_id);
 
 
--- 5.8 outer join
+
+-- 5.6.2 outer join <--> 오라클 join에서 (+)를 사용하는 outer join과 같은 기능을 하는 ansi join
+-- 오라클 join의 outer join은 조인 조건절에 모두 (+)를 붙였음.
+-- ansi join의 outer join은 from절에 [left|right|full] outer join을 사용하고,
+-- join 조건은 on절에 명시한다.
+
+[예제5-16] 사원의 사번, 이름, 부서코드, 부서명 정보를 조회한다.
+select e.employee_id, e,first_name, e.department_id, d.department_name
+from employees e join departments d --inner : 생략가능
+on e.department_id = d.department_id; -- where 대신 on 또는 using(공통 컬럼명)
+
 
 
 
