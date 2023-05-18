@@ -233,3 +233,41 @@ order by to_char(hire_date, 'MM');
 
 --수업에서는 인라인 뷰 실습용
 --업무 -> 집계성 테이블은 실제 db에 반영하고, 기업 경영하는데 필요한 데이터로 누적해서 관리!
+
+-- rownum 또는 row_number() : 테이블에 존재하지 않는 의사컬럼으로 select 절과 where절에 사용
+-- 쿼리문의 결과는 각 행에 대한 순서 값
+--===============랭크(순위) 관련 함수=======================
+--row_number() over (rank_clause) : 동순위는 표시 x
+--dense_rank() : rank 함수처럼 순위 함수 -> 동순위 표시o, 다음 순위 ex) 1,1,2
+--rank() : 일반적이 랭크(=순위) 함수 -> 동순위 표시 o , 다음 순위+1 ex) 1,1,3
+--average_rank() : 평균 값을 이용한 순위 함수 -> 오라클 21c에서는 실행 안됨
+
+[예제6-27] 사번, 이름을 10건 조회
+select rownum, employee_id, last_name
+from employees
+where rownum<=10;
+
+[예제6-28] 급여가 높은 상위 10명 사원의 사번, 이름, 급여 정보 조회
+select *
+from (select employee_id, last_name, salary
+        from employees
+        order by salary desc)
+where rownum <= 10;
+
+--순위함수를 사용할 떄
+select employee_id, last_name, salary,
+        rank() over(order by salary desc) as salary_rank
+from employees;
+
+
+
+
+
+
+
+
+
+
+
+
+
