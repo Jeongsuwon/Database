@@ -116,6 +116,8 @@ create table month_salary2(
     avg_sal number
 );
 
+drop table month_salary2;
+
 insert into month_salary2(dept_id)
 select department_id
 from employees
@@ -131,7 +133,7 @@ set emp_count = (select count(*)
                 from employees e
                 where e.department_id = m.dept_id
                 group by e.department_id),
-    sum_sal =  (select tot(e.salary)
+    tot_sal =  (select sum(e.salary)
                 from employees e
                 where e.department_id = m.dept_id
                 group by e.department_id),
@@ -140,7 +142,27 @@ set emp_count = (select count(*)
                 where e.department_id = m.dept_id
                 group by e.department_id);
 
+[예제8-14] month_salary2의 emp_count, tot_sal, avg_sal 컬럼을 다중컬럼 서브쿼리를 활용해
+           employees의 부서별 집계된 데이터를 업데이트(단, 급여평균은 정수로 표시)
+           
+update month_salary2 m
+set (emp_count, tot_sal, avg_sal) = ( select count(*),sum(salary),round(avg(salary))
+                                     from employees e
+                                     where e.department_id = m.dept_id
+                                     group by e.department_id
+                                     )
+
 -- 8.4 delete : 기존 데이터를 삭제하는 명령
+-- 테이블의 행 데이터를 삭제하는 기본 문법
+-- where 절의 조건에 일치하는 행 데이터를 삭제(where 절 생략시 모든 행 데이터가 삭제)
+
+[예제8-15] emp테이블에서 60번 부서의 사원 정보를 삭제
+--조회
+select *
+from emp
+order by dept_id;
+
+delete from emp where dept_id=60;
 
 -- commit : 데이터를 조작(메모리) -> (물리적인 저장장치에) 반영
 -- rollback : 데이터 조작 -> 변경사항을 버림
