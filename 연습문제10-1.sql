@@ -179,3 +179,110 @@ FROM    characters;
 -- 알아서 커밋
 COMMIT;
 
+--9. characters 테이블의 master_id 컬럼은 employees 테이블의 manager_id와 같은 역할
+--매니저 사원의 사번: manager_id
+--master_id: 캐리터 중 마스터의 캐릭터id --master_id가 null인데, 마스터에 해당하는 캐릭터의 id로 알맞게 변경
+
+update characters
+set master_id = (select character_id
+                from characters
+                where character_name = '오비완 케노비')
+where character_name in ('아나킨 스카이워커', '루크 스카이워커');
+
+update characters
+set master_id = (select character_id
+                from characters
+                where character_name = '요다')
+where character_name in ('마스터 원두', '두쿠 백작');
+
+update characters
+set master_id = (select character_id
+                from characters
+                where character_name = '다쓰 시디어스')
+where character_name in ('다쓰 베이더', '다쓰 몰');
+
+update characters
+set master_id = (select character_id
+                from characters
+                where character_name = '콰이곤 진')
+where character_name = '오비완 케노비';
+
+update characters
+set master_id = (select character_id
+                from characters
+                where character_name = '두쿠 백작')
+where character_name = '콰이곤 진';
+
+select *
+from characters;
+
+commit;
+
+--10. casting(등장인물과 실제 배우정보 테이블)의 기본키는 episode_id, character_id
+--두 컬럼은 각각 star_wars와 characters 테이블의 기본키를 참조
+
+--테이블 생성시 제약조건 정의: 컬럼/테이블 레벨
+
+--이미 테이블이 생선된 뒤 제약조건 추가
+--star_wars 테이블의 episode_id 컬럼을 참조하는 casting 테이블의 episode_id 컬럼에 fk 제약조건 지정
+alter table casting
+add constraint star_wars_episode_id_fk foreign key (episode_id) references star_wars (episode_id);
+
+
+--characters 테이블의 character_id 컬럼을 참조하는 casting 테이블의 character_id 컬럼에 fk 제약조건 지정
+
+alter table casting
+add constraint characters_character_id_fk foreign key (character_id) references characters (character_id);
+
+commit;
+
+
+--casting table--
+INSERT INTO casting
+VALUES (4, 1, '마크 해밀');
+INSERT INTO casting
+VALUES (4, 2, '해리슨 포드');
+INSERT INTO casting
+VALUES (4, 3, '캐리 피셔');
+
+INSERT INTO casting
+VALUES (5, 4, '앨릭 기니스');
+INSERT INTO casting
+VALUES (5, 5, '데이비드 프로스');
+INSERT INTO casting
+VALUES (5, 6, '제임스 얼 존스');
+
+INSERT INTO casting
+VALUES (6, 7, '앤서니 대니얼스');
+INSERT INTO casting
+VALUES (6, 8, '케니 베이커');
+INSERT INTO casting
+VALUES (6, 9, '피터 메이휴');
+
+INSERT INTO casting
+VALUES (1, 10, '빌리 디 윌리엄스');
+INSERT INTO casting
+VALUES (1, 11, '프랭크 오즈');
+INSERT INTO casting
+VALUES (1, 12, '이더 맥더미드');
+
+INSERT INTO casting
+VALUES (2, 13, '헤이든 크리스텐슨');
+INSERT INTO casting
+VALUES (2, 14, '리엄 니슨');
+INSERT INTO casting
+VALUES (2, 15, '나탈리 포트만');
+
+INSERT INTO casting
+VALUES (3, 16, '페르닐라 오거스트');
+INSERT INTO casting
+VALUES (3, 17, '아메드 베스트');
+INSERT INTO casting
+VALUES (3, 18, '레이 파크');
+
+INSERT INTO casting
+VALUES (3, 19, '테뮤라 모리슨');
+INSERT INTO casting
+VALUES (3, 20, '새뮤얼 L. 잭슨');
+INSERT INTO casting
+VALUES (3, 21, '크리스토퍼 리');
